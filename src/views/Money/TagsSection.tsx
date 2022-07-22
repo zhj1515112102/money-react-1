@@ -7,9 +7,9 @@ const Wrapper = styled.section`
   justify-content: flex-end; align-items: flex-start;
   > ol { margin: 0 -12px;
     > li{
-       background: #D9D9D9; border-radius: 18px;
-       display:inline-block; padding: 3px 18px; 
-       font-size: 14px; margin: 8px 12px;
+      background: #D9D9D9; border-radius: 18px;
+      display:inline-block; padding: 3px 18px;
+      font-size: 14px; margin: 8px 12px;
       &.selected{
         background: #f60;
       }
@@ -27,7 +27,7 @@ type Props = {
 }
 const TagsSection:React.FC<Props> =(props)=>{
   const [tags,setTags] = useState<string[]>(['衣','食','住','行'])
-  const [selectedTags,setSelectedTags] = useState<string[]>([])
+  const selectedTags = props.selected
   const onAddTag=()=>{
     const tagName= window.prompt('新标签的名称为')
     if(tagName!==null){
@@ -37,10 +37,10 @@ const TagsSection:React.FC<Props> =(props)=>{
   const onToggleTag=(tag:string)=>{
     const index = selectedTags.indexOf(tag)
     if(index>=0){
-      setSelectedTags(selectedTags.filter(t=>t!==tag))
+      props.onChange(selectedTags.filter(t=>t!==tag))
       // 如果tag被选中，就复制没有被选中的tag，作为新的selectedTag
     }else{
-      setSelectedTags([...selectedTags,tag])
+      props.onChange([...selectedTags,tag])
     }
   }
   const getClass =(tag:string)=>selectedTags.indexOf(tag)>=0?'selected':''
